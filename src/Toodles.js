@@ -1,8 +1,9 @@
-//automatically adds click listeners to all the add buttons
-document.getElementById('add').addEventListener('click', add);
-document.getElementById('task').addEventListener('keypress',function(e){if(e.keyCode===13){add();}})
 //shows all the to-dos
 show();
+
+//automatically adds listeners to the create button and for entering in the text field
+document.getElementById('add').addEventListener('click', function(){add(document.getElementById('task').value + ' - ' + getCurrentDate())});
+document.getElementById('task').addEventListener('keypress',function(e){if(e.keyCode===13){add(this.value + ' - ' + getCurrentDate());}});
 
 //get all the to-do objects.
 function get_todos() {
@@ -17,9 +18,7 @@ function get_todos() {
     return todos;
 }
  
-function add() {
-	//get the input field
-    var task = document.getElementById('task').value + ' - ' + getCurrentDate();
+function add(task) {
 	//get all the other todos
     var todos = get_todos();
 	//put this one at the bottom
@@ -35,10 +34,8 @@ function add() {
  
     return false;
 }
- 
-function remove() {
-    //whatever you clicked on, gets its ID which will be a number
-	var id = this.getAttribute('id');
+
+function remove(id,timeout) {
 	//get all other todos
     var todos = get_todos();
 	//delay
@@ -51,7 +48,7 @@ function remove() {
 		//show them all now
 		show();
 		return false;
-	},(1000));
+	},(timeout));
 }
  
 function show() {
@@ -63,7 +60,7 @@ function show() {
 	//iterate through all todos and put them into list tags, with in-order numerical IDs
     if(todos.length !== 0){
 		for(var i=0; i<todos.length; i++) {
-			html += '<li>' + todos[i] + '	' + '<input class="remove" type = "checkbox" id="' + i  + '"></input></li>';
+			html += '<li>' + todos[i] + '	' + '<img class ="edit" src="edit_icon.png" id="' + i + '"></img><input class="remove" type = "checkbox" id="' + i  + '"></input></li>';
 		};
 	}
 	else{
@@ -78,8 +75,14 @@ function show() {
 	//for each todo you just placed, give the checkboxes event listeners
     var checkboxes = document.getElementsByClassName('remove');
     for (var i=0; i < checkboxes.length; i++) {
-        checkboxes[i].addEventListener('click', remove);
+        checkboxes[i].addEventListener('click', function(){remove(this.getAttribute('id'),1000);});
     };
+	
+	//set up edit buttons with event listeners
+	var editbuttons = document.getElementsByClassName('edit')
+	for(var i = 0; i < editbuttons.length; i++){
+		editbuttons[i].addEventListener('click',edit);
+	}
 }
 
 function getCurrentDate(){
@@ -105,9 +108,24 @@ function getCurrentDate(){
 }
 
 function edit(){
-	//get the id value of which one you want to edit
+	//get the edit ID
 	var id = this.getAttribute('id');
 	
+	var todos = get_todos();
+	var prefill = todos[id];
+	
+	//prompt user for change
+	var change = prompt("Please edit your entry.",prefill);
+	//if user doesnt make a change...
+	if(change.length === 0){
+		return false;
+	}
+	
+	else{
+	add(change);
+	remove(id,0);
+	return false;
+	}
 	
 }
  
