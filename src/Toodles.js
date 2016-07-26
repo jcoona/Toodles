@@ -2,8 +2,8 @@
 show();
 
 //automatically adds listeners to the create button and for entering in the text field
-document.getElementById('add').addEventListener('click', function(){add(document.getElementById('task').value + ' - ' + getCurrentDate())});
-document.getElementById('task').addEventListener('keypress',function(e){if(e.keyCode===13){add(this.value + ' - ' + getCurrentDate());}});
+document.getElementById('add').addEventListener('click', function(){add(document.getElementById('task').value)});
+document.getElementById('task').addEventListener('keypress',function(e){if(e.keyCode===13){add(this.value);}});
 
 //get all the to-do objects.
 function get_todos() {
@@ -19,6 +19,8 @@ function get_todos() {
 }
  
 function add(task) {
+	//add date to end of task
+	task = task + ' - ' + getCurrentDate();
 	//get all the other todos
     var todos = get_todos();
 	//put this one at the bottom
@@ -40,6 +42,7 @@ function remove(id,timeout) {
     var todos = get_todos();
 	//delay
 	setTimeout(function(){
+		window.alert("Please wait");
 		//take out that todo
 		todos.splice(id, 1);
 		//re-add all the todos to the local storage
@@ -112,7 +115,14 @@ function edit(){
 	var id = this.getAttribute('id');
 	
 	var todos = get_todos();
-	var prefill = todos[id];
+	//get the todo we are looking for, but we have to take off the date for the autofill...
+	var task = todos[id];
+	var prefill = '';
+	
+	//takes date off of prefill
+	for(var i = 0; i<task.length-13; i++){
+		prefill = prefill + task[i];
+	}
 	
 	//prompt user for change
 	var change = prompt("Please edit your entry.",prefill);
