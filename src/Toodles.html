@@ -2,18 +2,23 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" type="text/css" href="Toodles.css">
+  <script src="jquery-3.1.0.min.js"></script>
   <title>To-do list</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 </head>
 <body>
+<div class="container">
+<div style = "margin-left: 23px;">
 <h2>Welcome to the To-Do list!</h2>
-<input id="task">&nbsp;&nbsp;&nbsp;&nbsp;<button id="add">Create To-do!</button>
+<input class="task" id="task">&nbsp;&nbsp;&nbsp;&nbsp;<button id="add">Create To-do!</button>
+</div>
 <hr>
-<div id="todos"></div>
+<div class="todos" id="todos"></div>
+</div>
 
 <script src="Toodles.js"></script>
-<script src="jquery-3.1.0.min.js"></script>
+
 
 </body>
 </html>

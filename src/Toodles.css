@@ -1,4 +1,23 @@
 .edit{
-	width: 3%;
+	height: 22px;
 	cursor: pointer;
+}
+
+body{
+	background-image: url("tamra.gif");
+}
+
+.container{
+	display: inline-block; /* this is so the div is only as long as content */
+	border-radius: 25px;
+	background-image: url('images/backgrounds/glitter.gif');
+}
+
+h2{
+	font-family:Monotype Corsiva, Times, Serif;
+	color: white;
+}
+
+.todos{
+	background-color: white;
 }

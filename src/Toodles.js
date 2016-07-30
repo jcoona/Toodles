@@ -1,3 +1,7 @@
+//randomize background images
+var backgrounds = ['tamra.gif','nene.gif','laganja.gif','alyssa.gif','willam.gif','bianca.gif','brandi.gif'];
+$('body').css({'background-image': 'url(images/backgrounds/' + backgrounds[Math.floor(Math.random() * backgrounds.length)] + ')'});
+
 //shows all the to-dos
 show();
 
@@ -18,6 +22,7 @@ function get_todos() {
     return todos;
 }
  
+ //add a task
 function add(task) {
 	//add date to end of task
 	task = task + ' - ' + getCurrentDate();
@@ -37,12 +42,12 @@ function add(task) {
     return false;
 }
 
+//remove a task
 function remove(id,timeout) {
 	//get all other todos
     var todos = get_todos();
 	//delay
 	setTimeout(function(){
-		window.alert("Please wait");
 		//take out that todo
 		todos.splice(id, 1);
 		//re-add all the todos to the local storage
@@ -54,6 +59,7 @@ function remove(id,timeout) {
 	},(timeout));
 }
  
+ //show all tasks
 function show() {
 	//get all todos
     var todos = get_todos();
@@ -63,7 +69,7 @@ function show() {
 	//iterate through all todos and put them into list tags, with in-order numerical IDs
     if(todos.length !== 0){
 		for(var i=0; i<todos.length; i++) {
-			html += '<li>' + todos[i] + '	' + '<img class ="edit" src="edit_icon.png" id="' + i + '"></img><input class="remove" type = "checkbox" id="' + i  + '"></input></li>';
+			html += '<li>' + todos[i] + '	' + '<img class ="edit" src="images/edit_icon.png" id="' + i + '"></img><input class="remove" type = "checkbox" id="' + i  + '"></input></li>';
 		};
 	}
 	else{
@@ -88,6 +94,7 @@ function show() {
 	}
 }
 
+//get the current date
 function getCurrentDate(){
 	var today = new Date();
 	var dd = today.getDate();
@@ -110,6 +117,7 @@ function getCurrentDate(){
 	return today;
 }
 
+//edit a task
 function edit(){
 	//get the edit ID
 	var id = this.getAttribute('id');
@@ -135,7 +143,7 @@ function edit(){
 	add(change);
 	remove(id,0);
 	return false;
-	}
-	
+	}	
 }
+
  
