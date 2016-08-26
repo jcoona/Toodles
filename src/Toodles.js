@@ -1,5 +1,5 @@
 //randomize background images
-var backgrounds = ['tamra.gif','nene.gif','laganja.gif','alyssa.gif','willam.gif','bianca.gif','brandi.gif'];
+var backgrounds = ['tamra.gif','nene.gif','tati.gif','kylie.gif','bicth.gif','emma.gif','mariah.gif','laganja.gif','alyssa.gif','kim.gif','willam.gif','kenya.gif','bianca.gif','brandi.gif'];
 $('body').css({'background-image': 'url(images/backgrounds/' + backgrounds[Math.floor(Math.random() * backgrounds.length)] + ')'});
 
 //shows all the to-dos
