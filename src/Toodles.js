@@ -62,20 +62,17 @@ function add(task, type) {
 }
 
 //remove a task
-function remove(id,timeout,type) {
+function remove(id,type) {
 	//get all other todos
     var todos = get_todos(type);
-	//delay
-	setTimeout(function(){
-		//take out that todo
-		todos.splice(id, 1);
-		//re-add all the todos to the local storage
-		localStorage.setItem(type, JSON.stringify(todos));
+	//take out that todo
+	todos.splice(id, 1);
+	//re-add all the todos to the local storage
+	localStorage.setItem(type, JSON.stringify(todos));
 	
-		//show them all now
-		show(type);
-		return false;
-	},(timeout));
+	//show them all now
+	show(type);
+	return false;
 }
  
  //show all tasks
@@ -88,7 +85,7 @@ function show(type) {
 	//iterate through all todos and put them into list tags, with in-order numerical IDs
     if(todos.length !== 0){
 		for(var i=0; i<todos.length; i++) {
-			html += '<li>' + todos[i] + '	' + '<img class ="edit" src="images/edit_icon.png" id="' + i + '" data-type = "' + type + '"></img><input class="remove" type = "checkbox" id="' + i  + '"></input></li>';
+			html += '<li>' + todos[i] + '	' + '<img class ="edit" src="images/edit_icon.png" id="' + i + '" data-type = "' + type + '"></img><input class="' + type + 'remove" type = "checkbox" id="' + type + i  + '" data-number = "' + i + '"></input></li>';
 		};
 	}
 	else{
@@ -102,9 +99,11 @@ function show(type) {
     document.getElementById(div).innerHTML = html;
  
 	//for each todo you just placed, give the checkboxes event listeners
-    var checkboxes = document.getElementsByClassName('remove');
+	var classname = type + 'remove';
+    var checkboxes = document.getElementsByClassName(classname);
+    var removefunction = function(event){remove(this.getAttribute('data-number'),type);}
     for (var i=0; i < checkboxes.length; i++) {
-        checkboxes[i].addEventListener('click', function(){remove(this.getAttribute('id'),1000,type);});
+        checkboxes[i].addEventListener('click', removefunction, 'false');
     };
 	
 	//set up edit buttons with event listeners
@@ -162,7 +161,7 @@ function edit(){
 	
 	else{
 	add(change, type);
-	remove(id,0, type);
+	remove(id, type);
 	return false;
 	}	
 }
